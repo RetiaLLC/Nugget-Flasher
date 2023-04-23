@@ -30,9 +30,10 @@ print("Found {} devices to flash".format(len(ports)))
 
 processes = []
 for port, desc, hwid in sorted(ports):
-    print("ESP32-S2 found on port: {}".format(port))
-    proc = subprocess.Popen(["esptool.py --port {} --after no_reset write_flash 0x0 {}".format(port, binary)],shell=True)
-    processes.append(proc)
+    if ("303A:0002" in hwid):
+        print("ESP32-S2 found on port: {}".format(port))
+        proc = subprocess.Popen(["esptool.py --port {} --after no_reset write_flash 0x0 {}".format(port, binary)],shell=True)
+        processes.append(proc)
 
 failures = 0
 passes = 0
